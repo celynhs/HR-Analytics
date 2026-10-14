@@ -7,10 +7,10 @@ An end-to-end HR analytics project covering descriptive workforce reporting in *
 
 | | Part A: Workforce and turnover analysis | Part B: Attrition drivers and risk model |
 |---|---|---|
-| **Dataset** | [HRDataset_v14](https://www.kaggle.com/datasets/rhuebner/human-resources-data-set) (Kaggle, Huebner & Patalano) | `employee_attrition_hr_2026.csv` *(add source link)* |
+| **Dataset** | [HRDataset_v14](https://www.kaggle.com/datasets/rhuebner/human-resources-data-set) (Kaggle, Huebner & Patalano) | [employee_attrition_hr_2026]([https://www.kaggle.com/datasets/rhuebner/human-resources-data-set](https://www.kaggle.com/datasets/uditjain13/employee-attrition-and-hr-analytics-2026)) |
 | **Size** | 311 employees, 36 columns | 5,000 employees, 895 leavers |
 | **What it has** | Hire and exit dates, exit reasons, managers, recruitment source, performance | Wellbeing scores, pay and promotion history, work mode, AI exposure (no dates) |
-| **Tools** | BigQuery SQL → Power BI | Python (pandas, scipy, statsmodels, scikit-learn) |
+| **Tools** | BigQuery SQL | Python (pandas, scipy, statsmodels, scikit-learn) |
 | **Focus** | Trends, exit reasons, managers, hiring channels, pay equity | Statistical drivers, risk model, cost of attrition, fairness |
 
 ---
@@ -78,7 +78,7 @@ Every SQL file follows the same pattern. A starting-point query shows the simple
 
 ### A5. Manager effect
 - **A fair comparison:** the 9 Production technician managers run near-identical teams (21–22 people, same role mix, same hiring years).
-- **Turnover vs expected:** against a peer rate of 8.2% a year, **Amy Dunn and Webster Butler each lost 13 people vs 7.4 expected** (1.75×), and Kissy Sullivan 12 vs 8.8.
+- **Turnover vs expected:** against a peer rate of 8.2% a year, **Amy Dunn and Webster Butler each lost 13 people vs 7.4 expected** (1.75× expected rate), and Kissy Sullivan 12 vs 8.8.
 - **The reasons differ:**
   - Amy Dunn's team accounts for **6 of the 19 exits for unhappiness or hours**, the reasons a line manager shapes.
   - Webster Butler's exits were mostly life events.
@@ -148,9 +148,6 @@ The datasets are unrelated, but some themes came up in both:
 - **Part B:** no dates (a single snapshot), self-reported wellbeing measures, and likely synthetic data. All findings are associations, not proven causes.
 - **Cost estimates** in Part B rely on assumed replacement costs (30–100% of salary).
 
-## Next steps
-- Power BI dashboard for Part A, built on the summary tables created in SQL (`a1_year_end_headcount`, `a2_turnover_by_dept_year`, `a3_exits`, `a4_hires`, `a5_manager_scorecard`).
-
 ---
 
-*Author: Jocelin · [LinkedIn](#) · [Email](#)*
+*Author: Jocelin · [LinkedIn](https://www.linkedin.com/in/jocelin-helsa-418092264/) · [Email](celinhelsa28@gmail.com)*
