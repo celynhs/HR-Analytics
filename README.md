@@ -158,7 +158,6 @@ Each issue has its own `flag_` column, and key results were **re-run without fla
 - **Fixed retention windows** (1/2/3 years from each person's hire date) to remove the effect of hiring timing.
 - **Like-for-like comparisons:** hiring channels compared within Production only, managers compared only with peers running near-identical teams, and pay compared within the same position.
 - **Small groups are flagged** throughout, and results are treated as indicative.
-- Summary tables were saved in BigQuery for a Power BI dashboard.
 
 **Part B (Python)**
 
