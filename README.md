@@ -177,7 +177,7 @@ Significance level: p < 0.05.
 
 ### A1. Workforce profile
 
-📄 [A1_workforce_profile.sql](./part_a_sql/A1_workforce_profile.sql)
+📄 [A1_workforce_profile.sql](./part_a_sql/A1.sql)
 
 | Year | Hires | Exits | Year-end headcount |
 |---|---|---|---|
@@ -195,7 +195,7 @@ Significance level: p < 0.05.
 
 ### A2. Turnover trend
 
-📄 [A2_turnover_trend.sql](./part_a_sql/A2_turnover_trend.sql)
+📄 [A2_turnover_trend.sql](./part_a_sql/A2.sql)
 
 - **Turnover isn't steadily rising.** It sat at 5–8% a year in 2011–2014, **peaked at 10.3% in 2015** and 9.8% in 2016, then eased to 3.6% (2017) and 6.1% (2018).
 - **Average: 7.2% a year**, mostly voluntary (6.1% voluntary, 1.1% involuntary).
@@ -211,7 +211,7 @@ Significance level: p < 0.05.
 
 ### A3. Why people leave
 
-📄 [A3_exit_reasons.sql](./part_a_sql/A3_exit_reasons.sql)
+📄 [A3_exit_reasons.sql](./part_a_sql/A3.sql)
 
 | Exit group | Exits | Share |
 |---|---|---|
@@ -226,7 +226,7 @@ Significance level: p < 0.05.
 
 ### A4. Recruitment source quality
 
-📄 [A4_recruitment_source.sql](./part_a_sql/A4_recruitment_source.sql)
+📄 [A4_recruitment_source.sql](./part_a_sql/A4.sql)
 
 **The early signal is misleading:** 61% of Google Search hires have left vs 16% of referrals. But 89.8% of Google Search hires went into Production, and they were hired earlier, so they had more time to leave.
 
@@ -247,7 +247,7 @@ Significance level: p < 0.05.
 
 ### A5. Manager effect
 
-📄 [A5_manager_effect.sql](./part_a_sql/A5_manager_effect.sql)
+📄 [A5_manager_effect.sql](./part_a_sql/A5.sql)
 
 The 9 Production technician managers run **near-identical teams** (21–22 people, same role mix, same hiring years), which makes a fair comparison. Each team's leavers were compared with the peer rate of **8.2% a year**.
 
@@ -264,7 +264,7 @@ The 9 Production technician managers run **near-identical teams** (21–22 peopl
 
 ### A6. Performance, engagement and exits
 
-📄 [A6_performance_engagement_exits.sql](./part_a_sql/A6_performance_engagement_exits.sql)
+📄 [A6_performance_engagement_exits.sql](./part_a_sql/A6.sql)
 
 | Performance score | Annual turnover | Share of workforce | Share of leavers |
 |---|---|---|---|
@@ -280,7 +280,7 @@ The 9 Production technician managers run **near-identical teams** (21–22 peopl
 
 ### A7. Pay equity
 
-📄 [A7_pay_equity.sql](./part_a_sql/A7_pay_equity.sql)
+📄 [A7_pay_equity.sql](./part_a_sql/A7.sql)
 
 | Measure (current staff) | Gap (men's favour) |
 |---|---|
