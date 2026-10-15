@@ -35,6 +35,14 @@ In this project, I cleaned and validated two HR datasets, then analysed them to 
     - [A6. Performance, engagement and exits](#a6-performance-engagement-and-exits)
     - [A7. Pay equity](#a7-pay-equity)
   - [Findings: Part B (Python)](#findings-part-b-python)
+    - [B1. Attrition profile](#b1-attrition-profile)
+    - [B2. Wellbeing drivers](#b2-wellbeing-drivers)
+    - [B3. Pay and career progression](#b3-pay-and-career-progression)
+    - [B4. Work arrangements and AI](#b4-work-arrangements-and-ai)
+    - [B5. Attrition risk model](#b5-attrition-risk-model)
+    - [B6. Drivers: what matters and what can be changed](#b6-drivers-what-matters-and-what-can-be-changed)
+    - [B7. Business impact](#b7-business-impact)
+    - [B8. Fairness check](#b8-fairness-check)
   - [Recommendations](#recommendations)
   - [Limitations](#limitations)
   - [Repository structure](#repository-structure)
@@ -158,6 +166,7 @@ Each issue has its own `flag_` column, and key results were **re-run without fla
 - **Fixed retention windows** (1/2/3 years from each person's hire date) to remove the effect of hiring timing.
 - **Like-for-like comparisons:** hiring channels compared within Production only, managers compared only with peers running near-identical teams, and pay compared within the same position.
 - **Small groups are flagged** throughout, and results are treated as indicative.
+- Summary tables were saved in BigQuery for a Power BI dashboard.
 
 **Part B (Python)**
 
@@ -176,7 +185,9 @@ Significance level: p < 0.05.
 
 ### A1. Workforce profile
 
-📄 [A1_workforce_profile.sql](./part_a_sql/A1.sql)
+📄 [A1_workforce_profile.sql](./part_a_sql/A1_workforce_profile.sql)
+
+*Hires, exits and year-end headcount (selected years)*
 
 | Year | Hires | Exits | Year-end headcount |
 |---|---|---|---|
@@ -194,10 +205,28 @@ Significance level: p < 0.05.
 
 ### A2. Turnover trend
 
-📄 [A2_turnover_trend.sql](./part_a_sql/A2.sql)
+📄 [A2_turnover_trend.sql](./part_a_sql/A2_turnover_trend.sql)
+
+*Company turnover rate per year (exits ÷ average headcount)*
+
+| Year | Exits | Turnover rate | Voluntary | Involuntary |
+|---|---|---|---|---|
+| 2011 | 3 | 4.9% | 4.9% | 0.0% |
+| 2012 | 8 | 6.7% | 6.7% | 0.0% |
+| 2013 | 13 | 8.5% | 7.8% | 0.7% |
+| 2014 | 13 | 6.8% | 6.8% | 0.0% |
+| 2015 | 23 | **10.3%** | 8.1% | 2.2% |
+| 2016 | 22 | 9.8% | 8.0% | 1.8% |
+| 2017 | 8 | 3.6% | 2.7% | 0.9% |
+| 2018 | 13 | 6.1% | 4.2% | 1.9% |
+| **All years** | **104** | **7.2%** | **6.1%** | **1.1%** |
+
+*Years before 2011 are left out: headcount was under 20 and there was only 1 exit.*
 
 - **Turnover isn't steadily rising.** It sat at 5–8% a year in 2011–2014, **peaked at 10.3% in 2015** and 9.8% in 2016, then eased to 3.6% (2017) and 6.1% (2018).
-- **Average: 7.2% a year**, mostly voluntary (6.1% voluntary, 1.1% involuntary).
+- **Average: 7.2% a year**, mostly voluntary (6.1% voluntary, 1.1% involuntary). Involuntary exits only appear from 2013, and have been 1–2% a year since 2015.
+
+*Turnover by department, all years combined (main departments)*
 
 | Department | Cumulative share left | Annual turnover |
 |---|---|---|
@@ -210,7 +239,9 @@ Significance level: p < 0.05.
 
 ### A3. Why people leave
 
-📄 [A3_exit_reasons.sql](./part_a_sql/A3.sql)
+📄 [A3_exit_reasons.sql](./part_a_sql/A3_exit_reasons.sql)
+
+*All 104 exits by exit group*
 
 | Exit group | Exits | Share |
 |---|---|---|
@@ -225,9 +256,11 @@ Significance level: p < 0.05.
 
 ### A4. Recruitment source quality
 
-📄 [A4_recruitment_source.sql](./part_a_sql/A4.sql)
+📄 [A4_recruitment_source.sql](./part_a_sql/A4_recruitment_source.sql)
 
 **The early signal is misleading:** 61% of Google Search hires have left vs 16% of referrals. But 89.8% of Google Search hires went into Production, and they were hired earlier, so they had more time to leave.
+
+*Hiring channel scorecard, all hires (channels with 10+ hires)*
 
 | Channel | Hires | Annual turnover | Retained after 3 years | Rated "Exceeds" |
 |---|---|---|---|---|
@@ -239,6 +272,8 @@ Significance level: p < 0.05.
 | Google Search | 49 | **12.3%** | **71.4%** | **4.1%** |
 | *All channels* | *311* | *6.9%* | *85.3%* | *11.9%* |
 
+*Annual turnover here is leavers ÷ total years worked by that channel's hires. It's the same measure as in A2, but counts exact days up to Feb 2019, so the company figure is 6.9% instead of A2's 7.2%.*
+
 - **Google Search is still the weakest after correcting for role and timing:** 75.0% retained after 3 years within Production only, vs 86.1% for all Production hires.
 - **Referrals and LinkedIn are the strongest.** Referrals also have the best performance mix (3.2% below expectations).
 - **CareerBuilder and Diversity Job Fair** keep people about average for 3 years but lose more after that.
@@ -246,9 +281,11 @@ Significance level: p < 0.05.
 
 ### A5. Manager effect
 
-📄 [A5_manager_effect.sql](./part_a_sql/A5.sql)
+📄 [A5_manager_effect.sql](./part_a_sql/A5_manager_effect.sql)
 
-The 9 Production technician managers run **near-identical teams** (21–22 people, same role mix, same hiring years), which makes a fair comparison. Each team's leavers were compared with the peer rate of **8.2% a year**.
+The 9 Production technician managers run **near-identical teams** (21–22 people, same role mix, same hiring years), which makes a fair comparison. Each team's leavers were compared with the peer rate of **8.2% a year**, the combined turnover of all Production technicians (78 leavers ÷ 954.7 years worked). It's slightly lower than Production's 8.3% in A2 because it covers technicians only.
+
+*Production technician teams: actual vs expected leavers (peer rate 8.2% a year)*
 
 | Manager | Actual leavers | Expected | Main exit reasons |
 |---|---|---|---|
@@ -263,7 +300,9 @@ The 9 Production technician managers run **near-identical teams** (21–22 peopl
 
 ### A6. Performance, engagement and exits
 
-📄 [A6_performance_engagement_exits.sql](./part_a_sql/A6.sql)
+📄 [A6_performance_engagement_exits.sql](./part_a_sql/A6_performance_engagement_exits.sql)
+
+*Turnover by performance score (annual turnover = leavers ÷ years worked, as in A4)*
 
 | Performance score | Annual turnover | Share of workforce | Share of leavers |
 |---|---|---|---|
@@ -279,7 +318,9 @@ The 9 Production technician managers run **near-identical teams** (21–22 peopl
 
 ### A7. Pay equity
 
-📄 [A7_pay_equity.sql](./part_a_sql/A7.sql)
+📄 [A7_pay_equity.sql](./part_a_sql/A7_pay_equity.sql)
+
+*Pay gap by sex, current employees (positive = men paid more)*
 
 | Measure (current staff) | Gap (men's favour) |
 |---|---|
@@ -297,35 +338,165 @@ The 9 Production technician managers run **near-identical teams** (21–22 peopl
 
 📓 [HR_Analysis.ipynb](./part_b_python/HR_Analysis.ipynb)
 
-**Overall attrition: 17.9% (895 of 5,000 employees).**
+**Overall attrition: 17.9% (895 of 5,000 employees).** The dataset has no dates, so this is treated as attrition over one period (assumed 12 months).
 
-1. **Group membership alone explains little.** Attrition is highest in Customer Support (24.1%) and among onsite staff (21.2%), but these effects are weak on their own (Cramér's V < 0.15).
+### B1. Attrition profile
 
-2. **Wellbeing is the strongest driver.** Low-burnout employees leave at **4.6%**, against **51.5%** for the most burnt-out. Wellbeing alone nearly matches the full model (CV AUC 0.762 vs 0.777). **About 91% of overtime's effect runs through burnout.**
+![Attrition rate by group](images/hr_attrition_by_group.png)
 
-3. **Stalled careers matter more than pay level.** Attrition rises from **14.2%** (promoted within the last year) to **35.5%** (no promotion for 6+ years). Pay relative to peers has no independent effect.
+*Attrition rate by group (highest and lowest)*
 
-4. **AI job anxiety is a distinct driver** (about +11% odds per point), and using AI tools doesn't reduce it. Work mode, commute and travel have no independent effect once burnout is accounted for.
+| Group | Highest | Lowest |
+|---|---|---|
+| Department | Customer Support 24.1% | Engineering 14.5% |
+| Work mode | Onsite 21.2% | Remote 14.7% |
+| Performance rating | Rating 2: 28.7% | Rating 5: 7.5% |
+| Job level | Level 1: 20.8% | Level 5: 15.3% |
 
-5. **A simple model finds most at-risk employees.** Test AUC is 0.769, and the riskiest 20% of employees contain **45.5% of leavers**.
+- **All differences are statistically significant but weak on their own** (Cramér's V 0.05–0.14). Knowing someone's department or work mode says little about whether they'll leave.
+- **Job role differences are explained by department**, and job level stops being significant once flagged rows are removed.
+- **Personal characteristics don't matter:** age, gender, marital status and education show no link to attrition (all p > 0.2).
 
-| Risk tier | Attrition rate |
+### B2. Wellbeing drivers
+
+![Attrition rate by wellbeing level](images/hr_wellbeing_attrition.png)
+
+*Attrition rate at the lowest vs highest score band*
+
+| Factor | Lowest band | Highest band |
+|---|---|---|
+| Burnout | 4.6% (score 1–3) | **51.5%** (score 7–8.5) |
+| Engagement | 58.9% (score 1–3) | 2.5% (score 8.5–10) |
+| Manager support | 43.8% (score 1–3) | 7.7% (score 8.5–10) |
+| Overtime | 8.1% (0–2 hrs/week) | 39.4% (15+ hrs/week) |
+
+- **Wellbeing is the strongest signal in the data.** The five wellbeing factors alone nearly match the full model (CV AUC 0.762 vs 0.777). Removing them drops the model to 0.659, while removing any other group barely changes it.
+- **Overtime works through burnout:** about 91% of overtime's effect on attrition runs through higher burnout (mediation analysis with bootstrap).
+
+### B3. Pay and career progression
+
+![Attrition rate by pay and career level](images/hr_pay_career_attrition.png)
+
+| Years since promotion | Attrition rate |
 |---|---|
-| Low (<10%) | 4.9% |
-| Very high (≥40%) | 51.2% |
+| ≤ 1 year | 14.2% |
+| 2–3 years | 20.0% |
+| 4–6 years | 24.5% |
+| > 6 years | **35.5%** |
 
-6. **Most drivers are within the company's control.** 7 of 8 key drivers can be changed or influenced, accounting for **87.9%** of the model's predictive power.
+- **Stalled careers and small raises drive exits:** attrition falls from 27.9% for raises of 8% or less to 10.8% for raises above 16%.
+- **Pay level relative to peers doesn't independently predict exits:** the compa-ratio (pay vs level median) only moves attrition from 21.0% to 15.7%, and has no effect once other factors are accounted for.
+- **Raises barely reflect performance.** Well-rated employees (rating 4) on low raises leave at nearly twice the rate of those on high raises (20.4% vs 11.0%).
 
-| Driver | Effect on odds of leaving |
+### B4. Work arrangements and AI
+
+![Attrition rate by perceived AI job risk](images/hr_ai_risk_attrition.png)
+
+| Perceived AI job risk | Attrition rate |
 |---|---|
-| Burnout | +32.6% per point |
-| Manager support | −19.2% per point |
-| Years since promotion | +18.8% per year |
-| Engagement | −15.8% per point |
+| Low (1–3) | 13.2% |
+| Medium (4.5–6) | 18.8% |
+| High (7.5–10) | **26.7%** |
 
-7. **Attrition is costly.** It costs about **$35.5M a year** (8.54% of payroll; range $21.3M–$70.9M). A targeted package for the **23.7%** of staff in the High and Very high risk tiers could avoid about 165 leavers and save **$6.54M a year**.
+- **AI job anxiety is a distinct driver:** about **+11% odds of leaving per point**, even after accounting for department and wellbeing. Using AI tools doesn't reduce the effect.
+- **Customer Support has the highest perceived AI risk** (average 6.30 vs 3.90 in Engineering), which helps explain its higher attrition.
+- **Work arrangements aren't independent drivers.** Onsite staff leave more mainly because they're more burnt out. Commute and business travel have no independent effect.
 
-8. **The model is fair across gender** (AUC 0.779 women vs 0.772 men) but **weaker for employees aged 50+** (AUC 0.724), catching only 38.5% of older leavers.
+### B5. Attrition risk model
+
+![Cumulative gains chart](images/hr_cumulative_gains.png)
+
+A logistic regression using wellbeing, pay and career, work arrangement, AI, department and performance factors. Personal characteristics (age, gender, marital status, education) were **deliberately excluded** so risk scores aren't based on who someone is.
+
+| Measure (test set) | Result |
+|---|---|
+| AUC | 0.769 |
+| PR-AUC | 0.424 (vs 0.180 random) |
+| Leavers in the riskiest 10% | 27.0% |
+| Leavers in the riskiest 20% | **45.5%** |
+| At a 25% risk threshold | Flags 22.3% of employees, catches 50.9% of leavers, 40.9% of flagged employees leave |
+
+*Risk tiers, all employees*
+
+| Risk tier | Share of employees | Actual attrition |
+|---|---|---|
+| Low (<10%) | 40.0% | 4.9% |
+| Moderate (10–25%) | 36.3% | 17.3% |
+| High (25–40%) | 13.3% | 32.9% |
+| Very high (≥40%) | 10.4% | **51.2%** |
+
+- **The predicted risk matches reality** (good calibration), so the tiers can be used to plan.
+- **High-risk employees are concentrated** in Customer Support (39.4% are High or Very high) and among onsite staff (29.5%).
+
+### B6. Drivers: what matters and what can be changed
+
+![Permutation importance](images/hr_permutation_importance.png)
+
+*The 8 factors that independently drive attrition (full model)*
+
+| Driver | Effect on odds of leaving | Can the company change it? |
+|---|---|---|
+| Burnout | +32.6% per point | Influenceable |
+| Manager support | −19.2% per point | Influenceable |
+| Years since promotion | +18.8% per year | Directly changeable |
+| Engagement | −15.8% per point | Influenceable |
+| Perceived AI job risk | +9.5% per point | Influenceable |
+| Overtime | +4.6% per hour/week | Directly changeable |
+| Years at company | −4.4% per year | Not changeable |
+| Salary increase | −4.1% per percentage point | Directly changeable |
+
+- **Influenceable factors carry 69.9% of the model's predictive power**, directly changeable ones 24.9%, and fixed factors only 5.2%.
+- **7 of the 8 key drivers can be changed or influenced**, accounting for 87.9% of the model's predictive power.
+- *The AI risk effect is +9.5% here and about +11% in B4 because this model controls for more factors at once.*
+
+### B7. Business impact
+
+![Risk tiers: share of employees vs share of expected attrition cost](images/hr_risk_tier_cost.png)
+
+Assumptions: salaries treated as AUD, and replacing a leaver costs 50% of annual salary (30% and 100% tested).
+
+*Annual cost of attrition*
+
+| Scenario | Total cost | Cost per leaver | % of payroll |
+|---|---|---|---|
+| Low (30%) | $21.3M | $24,015 | 5.13% |
+| **Base (50%)** | **$35.5M** | **$40,025** | **8.54%** |
+| High (100%) | $70.9M | $80,050 | 17.09% |
+
+- **High and Very high risk employees are 23.7% of the workforce but 53.0% of expected cost.**
+
+![Estimated savings by intervention](images/hr_intervention_savings.png)
+
+*Estimated annual savings from interventions for High and Very high risk employees (base case)*
+
+| Intervention | Leavers avoided | Annual savings |
+|---|---|---|
+| Burnout −1 point | 70.8 | $2.75M |
+| Manager support +1 point | 53.6 | $2.08M |
+| Engagement +1 point | 44.0 | $1.71M |
+| Promotion gap capped at 3 years | 26.4 | $1.18M |
+| Overtime capped at 10 hrs/week | 23.8 | $0.93M |
+| **Combined** (burnout, manager support, overtime, promotion) | **165.3** | **$6.54M** |
+
+- **Targeting works:** the combined package for the high-risk 23.7% delivers **50.4% of the savings of a company-wide programme** ($12.97M), with more than twice as many leavers avoided per 100 people treated (14.1 vs 6.4).
+- **It pays for itself** if it costs less than about $5,595 per employee in the base case. Even with a 30% replacement cost and only half the predicted effect, it would still save $1.96M a year.
+
+### B8. Fairness check
+
+![Flag rate, recall and precision by group](images/hr_fairness.png)
+
+| Group | AUC | Leavers caught (recall) |
+|---|---|---|
+| Female | 0.779 | 54.5% |
+| Male | 0.772 | 53.1% |
+| Under 30 | 0.770 | 53.6% |
+| 30–39 | 0.776 | 57.7% |
+| 40–49 | 0.793 | 51.7% |
+| **50+** | **0.724** | **38.5%** |
+
+- **The model works equally well for women and men**, and predicted risk matches actual attrition for both.
+- **It's weaker for employees aged 50+**, catching only 38.5% of older leavers. Older leavers show fewer of the warning signs the model relies on, possibly because they leave for reasons like retirement that the data doesn't capture.
+- Non-binary employees and those who preferred not to say (13 and 17 leavers) are too small a group for reliable conclusions.
 
 ---
 
@@ -388,6 +559,8 @@ HR-Analytics/
 │   └── A7_pay_equity.sql
 ├── part_b_python/
 │   └── HR_Analysis.ipynb
+├── images/
+│   └── hr_*.png
 └── data/
     ├── HRDataset_v14.csv
     └── employee_attrition_hr_2026.csv
