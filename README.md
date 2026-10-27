@@ -10,7 +10,7 @@ In this project, I cleaned and validated two HR datasets, then analysed them to 
 
 **SQL Scripts (Part A):** [Click Here](./part_a_sql/)
 
-**Looker Data Studio Dashboard (Part A visualization):** [Click Here](https://datastudio.google.com/reporting/f82aa9d6-b59f-4dd6-bf98-dce19a5d0149)
+**Looker Data Studio Dashboard (Part A visualization):** [Click Here]([https://datastudio.google.com/reporting/f82aa9d6-b59f-4dd6-bf98-dce19a5d0149](https://datastudio.google.com/s/sPlUDnmog1U))
 
 **Python Notebook (Part B):** [Click Here](./part_b_python/HR_Analysis.ipynb)
 
