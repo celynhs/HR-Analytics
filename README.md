@@ -103,7 +103,7 @@ In this project, I cleaned and validated two HR datasets, then analysed them to 
 | **Rows** | 311 employees, 36 columns | 5,000 employees (895 leavers) |
 | **Time period** | Hires 2006–2018, data up to Feb 2019 | Single snapshot (no dates) |
 | **Contents** | Hire and exit dates, exit reasons, department, position, manager, recruitment source, performance, engagement, salary | Wellbeing scores, pay and promotion history, work mode, commute, AI job risk, performance |
-| **Tool** | BigQuery SQL | Python | Looker Data Studio |
+| **Tool** | BigQuery SQL, Looker Data Studio | Python |
 
 ---
 
