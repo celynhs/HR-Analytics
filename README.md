@@ -187,7 +187,7 @@ Significance level: p < 0.05.
 
 ### A1. Workforce profile
 
-📄 [A1_workforce_profile.sql](./part_a_sql/A1_workforce_profile.sql)
+📄 [A1_workforce_profile.sql](./part_a_sql/A1.sql)
 
 *Hires, exits and year-end headcount (selected years)*
 
@@ -207,7 +207,7 @@ Significance level: p < 0.05.
 
 ### A2. Turnover trend
 
-📄 [A2_turnover_trend.sql](./part_a_sql/A2_turnover_trend.sql)
+📄 [A2_turnover_trend.sql](./part_a_sql/A2.sql)
 
 *Company turnover rate per year (exits ÷ average headcount)*
 
@@ -241,7 +241,7 @@ Significance level: p < 0.05.
 
 ### A3. Why people leave
 
-📄 [A3_exit_reasons.sql](./part_a_sql/A3_exit_reasons.sql)
+📄 [A3_exit_reasons.sql](./part_a_sql/A3.sql)
 
 *All 104 exits by exit group*
 
@@ -258,7 +258,7 @@ Significance level: p < 0.05.
 
 ### A4. Recruitment source quality
 
-📄 [A4_recruitment_source.sql](./part_a_sql/A4_recruitment_source.sql)
+📄 [A4_recruitment_source.sql](./part_a_sql/A4.sql)
 
 **The early signal is misleading:** 61% of Google Search hires have left vs 16% of referrals. But 89.8% of Google Search hires went into Production, and they were hired earlier, so they had more time to leave.
 
@@ -283,7 +283,7 @@ Significance level: p < 0.05.
 
 ### A5. Manager effect
 
-📄 [A5_manager_effect.sql](./part_a_sql/A5_manager_effect.sql)
+📄 [A5_manager_effect.sql](./part_a_sql/A5.sql)
 
 The 9 Production technician managers run **near-identical teams** (21–22 people, same role mix, same hiring years), which makes a fair comparison. Each team's leavers were compared with the peer rate of **8.2% a year**, the combined turnover of all Production technicians (78 leavers ÷ 954.7 years worked). It's slightly lower than Production's 8.3% in A2 because it covers technicians only.
 
@@ -302,7 +302,7 @@ The 9 Production technician managers run **near-identical teams** (21–22 peopl
 
 ### A6. Performance, engagement and exits
 
-📄 [A6_performance_engagement_exits.sql](./part_a_sql/A6_performance_engagement_exits.sql)
+📄 [A6_performance_engagement_exits.sql](./part_a_sql/A6.sql)
 
 *Turnover by performance score (annual turnover = leavers ÷ years worked, as in A4)*
 
@@ -320,7 +320,7 @@ The 9 Production technician managers run **near-identical teams** (21–22 peopl
 
 ### A7. Pay equity
 
-📄 [A7_pay_equity.sql](./part_a_sql/A7_pay_equity.sql)
+📄 [A7_pay_equity.sql](./part_a_sql/A7.sql)
 
 *Pay gap by sex, current employees (positive = men paid more)*
 
@@ -551,14 +551,14 @@ Assumptions: salaries treated as AUD, and replacing a leaver costs 50% of annual
 HR-Analytics/
 ├── README.md
 ├── part_a_sql/
-│   ├── A0_data_check_and_cleaning.sql
-│   ├── A1_workforce_profile.sql
-│   ├── A2_turnover_trend.sql
-│   ├── A3_exit_reasons.sql
-│   ├── A4_recruitment_source.sql
-│   ├── A5_manager_effect.sql
-│   ├── A6_performance_engagement_exits.sql
-│   └── A7_pay_equity.sql
+│   ├── data-cleaning.sql
+│   ├── A1.sql
+│   ├── A2.sql
+│   ├── A3.sql
+│   ├── A4.sql
+│   ├── A5.sql
+│   ├── A6.sql
+│   └── A7.sql
 ├── part_b_python/
 │   └── HR_Analysis.ipynb
 ├── images/
